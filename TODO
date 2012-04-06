@@ -1,3 +1,7 @@
 TODO:
  - continue git tutorials
  - reading ants specification
+ - learning enums
+   - http://docs.oracle.com/javase/tutorial/java/javaOO/enum.html
+ - http://aichallenge.org/specification.php#Map-Format
+ - read a map file in a two dimensional array of enums { LAND, WATER }
