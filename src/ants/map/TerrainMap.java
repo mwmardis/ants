@@ -37,6 +37,17 @@ public class TerrainMap implements GameMap {
 
         return results;
     }
+    
+    public boolean isLocationWithinRadius(Location center, Location current, int radius) {
+    	double distance = Math.sqrt(Math.pow(current.getCol() - center.getCol(), 2) + Math.pow(current.getRow() - center.getRow(), 2));
+    	
+    	if (distance <= radius) {
+    		return true;
+    	}
+    	else {
+    		return false;
+    	}
+    }
 
     /* (non-Javadoc)
      * @see ants.map.GameMap#getItemsWithinBox(ants.map.Location, int)
@@ -70,19 +81,32 @@ public class TerrainMap implements GameMap {
      */
     @Override
     public Map<Location, MapItem> getItemsWithinRadius(Location loc, int radius) {
-        // TODO Auto-generated method stub
-        //        or (int row = tlr; row <= cr + side; row++) {
-        //            for (int col = tlc; col <= cc + side; col++) {
-        //                Location current = new Location(row, col);
-        //                // boolean inside = isLocationWithinRadius(current, radius)
-        //                // if (inside) {
-        //                //     add it
-        //                // otherwise, don't add it
-        //                MapItem item = getItem(current);
-        //                results.put(current, item);
-        //            }
-        //        }
-        return null;
+    	Map<Location, MapItem> results = new HashMap<Location, MapItem>((int) Math.pow((radius * 2) + 1, 2));
+    	int cr = loc.getRow();
+    	int cc = loc.getCol();
+
+    	int tlr = cr - radius;
+    	int tlc = cc - radius;
+
+    	for (int row = tlr; row <= cr + radius; row++) {
+    		for (int col = tlc; col <= cc + radius; col++) {
+    			Location current = new Location(row, col);
+    			// boolean inside = isLocationWithinRadius(current, radius)
+    			// if (inside) {
+    			//     add it
+    			// otherwise, don't add it
+    			//*****not yet tested*****
+    			if (isLocationWithinRadius(loc, current, radius)) {
+    				MapItem item = getItem(current);
+    				results.put(current, item);
+    			}
+
+    		}
+    	}
+
+
+
+    	return results;
     }
 
 }
